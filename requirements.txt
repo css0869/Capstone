@@ -1,0 +1,9 @@
+pandas
+numpy
+spacy
+sklearn
+re
+streamlit
+matplotlib
+streamlit-extras
+PIL
