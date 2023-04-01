@@ -1,18 +1,13 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.neighbors import NearestNeighbors
 import re
-import spacy
-from sklearn.decomposition import TruncatedSVD
-from spacy.lang.en.stop_words import STOP_WORDS
 from streamlit_extras.badges import badge
 from streamlit_extras.app_logo import add_logo
 from PIL import Image
 from streamlit_extras.colored_header import colored_header
 from streamlit_extras.customize_running import center_running
-#import awesome_streamlit as ast
 
 import Recommendation as rec
 
