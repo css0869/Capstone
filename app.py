@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.neighbors import NearestNeighbors
 import re
-from streamlit_extras.app_logo import add_logo
 from PIL import Image
 from streamlit_extras.colored_header import colored_header
 from streamlit_extras.customize_running import center_running
@@ -47,8 +46,6 @@ background-size: cover;
 </style>
 '''
     st.markdown(page_bg_img, unsafe_allow_html=True)
-    add_logo("http://placekitten.com/120/120")
-    #add_logo("Image/bottle_cloud.png", height=300)
     st.header("Find Safe-For-You Beauty Products")
     #st.title("Find Safe-For-You Beauty Products")
     st.sidebar.image('Image/bottle_cloud.png',  use_column_width=True)
