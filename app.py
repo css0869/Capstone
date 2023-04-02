@@ -4,8 +4,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.neighbors import NearestNeighbors
 import re
 from PIL import Image
-from streamlit_extras.colored_header import colored_header
-from streamlit_extras.customize_running import center_running
+#from streamlit_extras.colored_header import colored_header
+#from streamlit_extras.customize_running import center_running
 
 import Recommendation as rec
 
@@ -19,13 +19,17 @@ def show_product(result_df):
     result_df=pd.DataFrame(result_df,columns=['Brand','Name','Rating','Price','Category','Ingredient','Link']).reset_index(drop=True)
 
     for i in range(0,len(result_df)):
-        colored_header( label=result_df['Name'][i],description="",color_name="violet-70")
+        #colored_header( label=result_df['Name'][i],description="",color_name="violet-70")
         #st.subheader(result_df['Name'][i].tostring():blue[colors] )
                      #](https://streamlit.io/docs/))
+        
+        st.markdown("***")
+        st.subheader(result_df['Name'][i])
         st.write('Brand: ', result_df['Brand'][i])
         st.write('Price: ',result_df['Price'][i])
         st.write('Rating: ',result_df['Rating'][i]," out of 5 stars")
         st.write('Ingredient: ',result_df['Ingredient'][i])
+        st.text("")
     return
 
 def get_ig_list(df,name):
@@ -72,7 +76,7 @@ def app():
     # Create a text element and let the reader know the data is loading.
     if btn:
         data_load_state = st.text('Looking for your new favourites.🏃‍♂️')
-        center_running()
+        #center_running()
         result=rec.recommender(df,prod,allergen)
         st.markdown("You don't like {} . We got you....".format(allergen))
         st.markdown("These products include similar ingredients as **{}** **{}**, but without **{}** as you noted.".format(brand,prod,allergen)) 
