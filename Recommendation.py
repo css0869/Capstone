@@ -6,9 +6,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline,FeatureUnion
 from sklearn.neighbors import NearestNeighbors
 import re
-import spacy
-from sklearn.decomposition import TruncatedSVD
-from spacy.lang.en.stop_words import STOP_WORDS
 
 
 #Check if Ingredient list contains allergen item
