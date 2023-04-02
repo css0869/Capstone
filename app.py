@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.neighbors import NearestNeighbors
 import re
-from streamlit_extras.badges import badge
 from streamlit_extras.app_logo import add_logo
 from PIL import Image
 from streamlit_extras.colored_header import colored_header
