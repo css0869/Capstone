@@ -3,3 +3,4 @@ numpy
 scikit-learn
 streamlit==1.20.0
 streamlit-extras==0.2.6
+python_version=="3.9.13"
