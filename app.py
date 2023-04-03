@@ -1,13 +1,7 @@
 import streamlit as st
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.neighbors import NearestNeighbors
 import re
-from streamlit_extras.badges import badge
-from streamlit_extras.app_logo import add_logo
 from PIL import Image
-from streamlit_extras.colored_header import colored_header
-from streamlit_extras.customize_running import center_running
 
 import Recommendation as rec
 
@@ -56,8 +50,6 @@ background-size: cover;
 </style>
 '''
     st.markdown(page_bg_img, unsafe_allow_html=True)
-    add_logo("http://placekitten.com/120/120")
-    #add_logo("Image/bottle_cloud.png", height=300)
     st.header("Find Safe-For-You Beauty Products")
     #st.title("Find Safe-For-You Beauty Products")
     st.sidebar.image('Image/bottle_cloud.png',  use_column_width=True)
@@ -81,7 +73,6 @@ def app():
     # Create a text element and let the reader know the data is loading.
     if btn:
         data_load_state = st.text('Looking for your new favourites.🏃‍♂️')
-        center_running()
         result=rec.recommender(df,prod,allergen)
         st.markdown("You don't like {} . We got you....".format(allergen))
         st.markdown("These products are similar to **{}** **{}**, but do not contain **{}** as you noted.".format(brand,prod,allergen)) 
@@ -110,4 +101,3 @@ And contact allergies can take years to surface, when once-loved beauty products
 """)
         st.info("Read more about how the model works and see the code on my [Github](https://github.com/css0869/Safe-for-you-Beauty-Product-Recommendation).", icon="ℹ️")
         
-        #badge(type="github", name="css0869/Safe-for-you-Beauty-Product-Recommendation")
