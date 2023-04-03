@@ -1,10 +1,10 @@
 import pandas as pd
-import numpy as np
+
 from sklearn import base
-from sklearn.feature_extraction import DictVectorizer
+
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.neighbors import NearestNeighbors
-from sklearn.pipeline import Pipeline,FeatureUnion
+
 import re
 
 
