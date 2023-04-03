@@ -3,52 +3,29 @@ import numpy as np
 from sklearn import base
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.pipeline import Pipeline,FeatureUnion
 from sklearn.neighbors import NearestNeighbors
+from sklearn.pipeline import Pipeline,FeatureUnion
 import re
 
 
 #Check if Ingredient list contains allergen item
-
 def containsAllergen(df,allergen):
-    return df[ df['Ingredient'].str.contains(allergen.strip(), na=False,case=False)==False]
-
-
-
-#Feature engineering
-class DictEncoder(base.BaseEstimator, base.TransformerMixin):
-    
-    def __init__(self, col):
-        self.col = col
-    
-    def fit(self, X, y=None):
-        return self
-    
-    def transform(self, X):
-        
-        def to_dict(l):
-            try:
-                return {x.strip(): 1 for x in l}
-            except TypeError:
-                return {}        
-        return X[self.col].apply(to_dict)
+    return df[df['Ingredient'].apply(lambda x: allergen not in x)]
 
 
 def recommender(df,product, allergen):
-    df_1=df.copy()
-    df_1['Ig_list']=df.apply(lambda x:x['Ingredient'].split(','),axis=1)
-    ig_pipe = Pipeline([('encoder', DictEncoder('Ig_list')),
-                     ('vectorizer', DictVectorizer())#,('svd', TruncatedSVD(n_components=300))
-                   ])
-    #dt_pipe=Pipeline([("encoder",DictEncoder('Dt_list')),('vectorizer',DictVectorizer())])
-    #union=FeatureUnion([('Ingredient',ig_pipe),('Detail',dt_pipe)])
-    features = ig_pipe.fit_transform(df_1)
-    nn = NearestNeighbors(n_neighbors=20).fit(features)
-    index=df_1.index[df_1['Name']==product][0]
-    dists, indices = nn.kneighbors(features[index])
+    safe_df= df.copy()
     
-    prod_nbr=df_1.iloc[indices[0]]    
-    prod_nbr=prod_nbr[prod_nbr['Main_Category']==df_1['Main_Category'][index]]
+    bag_of_words_vectorizer=CountVectorizer(min_df=0,
+                             ngram_range=(1,2), 
+                             stop_words='english')
+    counts=bag_of_words_vectorizer.fit_transform(safe_df['Ingredient'])
+    nn = NearestNeighbors(n_neighbors=20).fit(counts) 
+    index=safe_df[safe_df['Name']==product].index
+    #safe_df.index[safe_df['Name']==product][0]
+    dists, indices = nn.kneighbors(counts[index[0]])
+    prod_nbr=safe_df.iloc[indices[0]]
     
-   
+    prod_nbr=prod_nbr[prod_nbr['Main_Category']==df['Main_Category'][index[0]]]
     return containsAllergen(prod_nbr,allergen).head(5)
+
